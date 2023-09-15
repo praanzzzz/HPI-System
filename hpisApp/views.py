@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect    #for the second function
 # Create your views here.
 
 
-def home(request):
-  return render(request, 'hpisApp/home.html')
+def dashboard(request):
+  return render(request, 'hpisApp/dashboard.html')
 
 def patientReg(request):
   return render(request, 'hpisApp/patientReg.html')
