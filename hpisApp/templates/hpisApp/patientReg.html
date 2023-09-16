@@ -1,6 +1,125 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
 
-<h1>PATIENT REGGGISSS</h1>
+<!--add and view option. different panel ang add-->
+
+<ul class="navbar-nav me-auto text-center">
+
+    <li class="nav-item">
+      <a class="nav-link" >
+        <i class="fa-solid fa-list fa-lg"></i> All Students</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'addPatient' %}">
+        <i class="fa-solid fa-plus fa-lg"></i> Register Patient</a>
+    </li>         
+</ul>
+
+
+
+
+
+
+<div class="container">
+  <h3 class="m-4">All Patient</h3>
+  <div class="row">
+    <div class="col-12">
+      <!--if naay patient, this will work, else wala-->
+      {% if patientReg %}
+      <div class="card bg-light">
+        <div class="card-header">
+          <i class="fa-solid fa-list fa-lg"></i> Patients Records</a>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Patient ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Sex</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!--loop list of students here-->
+                  {% for patientRegs in patientReg %}
+                  <tr>
+                    <!--dapat small caps when referring to function base model HERE (student) or referring sa views ni-->
+                    <td>{{ patientRegs.patient_id }}</td>
+                    <td>{{ patientRegs.first_name }}</td>
+                    <td>{{ patientRegs.last_name }}</td>
+                    <td>{{ patientRegs.sex }}</td>
+                    <td>{{ patientRegs.address }}</td>
+      
+   
+                    
+
+                      <!--modal is a dialog box used for confirmation etc.  this section is for the actions--> 
+                      <td>
+                        <!--VIEW BUTTON-->
+                        <button type="button" class="btn btn-success me-1" href="{% url 'view_patientReg' patientRegs.id %}" 
+                        data-bs-toggle="modal" data-bs-target="#myModal{{patientRegs.id}}"><i class="fa-solid fa-circle-info fa-lg"></i>
+                        </button>
+
+
+
+                         <!--modal -view_student-->
+                         <div class="modal" id="myModal{{patientRegs.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Patient: {{ patientRegs.first_name }} {{ patientRegs.last_name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true"></span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <ul class="list-unstyled">
+                                  <li>Patient ID: <strong>{{ patientRegs.patient_id }}</strong></li>
+                                  <li>First Name: <strong>{{ patientRegs.first_name }}</strong></li>
+                                  <li>Last Name: <strong>{{ patientRegs.last_name }}</strong></li>
+                                  <li>Sex: <strong>{{ patientRegs.sex }}</strong></li>
+                                  <li>Address: <strong>{{ patientRegs.address }}</strong></li>
+                                </ul>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                           <!--EDIT BUTTON ONLY, CALLING ONLY THE EDIT FUNCTION IN VIEW-->
+                        <a class="btn btn-warning me-1" href="{% url 'editPatient' patientRegs.id %}">
+                          <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                        </a>
+                   
+
+                    </td>
+                  </tr>                 
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </p>
+        </div>
+      </div>
+      {% else %}
+      <h5 class="alert alert-primary ms-4 me-4"> No Student Records</h5>
+      {% endif %}
+      <!--card-->
+      
+    </div>
+  </div>
+</div>
+
 {% endblock %}
+
+
+

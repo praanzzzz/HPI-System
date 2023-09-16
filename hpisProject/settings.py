@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #mine
     'hpisApp.apps.HpisappConfig',
+    #"phonenumber_field",
 ]
 
 MIDDLEWARE = [
