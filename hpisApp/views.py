@@ -77,6 +77,13 @@ def addPatient(request):
 
 
 
+def deletePatient(request, id):
+  if request.method == 'POST':
+    patientReg = PatientReg.objects.get(pk=id)
+    patientReg.delete()
+  return HttpResponseRedirect(reverse('patientReg'))
+
+
 
 
 def medHis(request):
