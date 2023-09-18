@@ -19,3 +19,20 @@ class PatientReg(models.Model):
 
 
 
+class MedHistory(models.Model):
+   #use automatic adding of id, manual for now
+   medhis_id = models.CharField(max_length=50)
+   #select patient name and select doctor models
+   #but for now, manual addition
+   first_name = models.CharField(max_length=50)
+   last_name = models.CharField(max_length=50)
+   doctor = models.CharField(max_length=50)
+   bp = models.CharField(max_length=10)
+   diagnosis = models.CharField(max_length= 50)
+   medication = models.CharField(max_length=50)
+
+
+   def __str__(self):
+      return f'Patient {self.first_name} {self.last_name}'
+
+

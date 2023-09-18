@@ -2,26 +2,27 @@
 {% load static%}
 {% block content %}
 
-  <h3 class="text-center m-4">Update Patient Information</h3>
+
+  <h3 class="text-center m-4">Update Medical Record</h3>
   <!--if the view.edit successful, mo run ni.-->
   {% if success %}
     <div class="alert alert-success" role="alert">
-      The patient Information updated successfully.
-      <a href="{% url 'patientReg' %}" class="alert-link">Go to Home Page.</a>
+      The Medical Record updated successfully.
+      <a href="{% url 'medHis' %}" class="alert-link">Go to Home Page.</a>
     </div>
   {% else %}
     <div class="row justify-content-center">
       <div class="col-6">
         <div class="card bg-light mb-3">
           <div class="card-header">
-            <i class="fa-solid fa-pen-to-square fa-lg"></i> Update Patient Records
+            <i class="fa-solid fa-pen-to-square fa-lg"></i> Update Medical History
           </div>
           <div class="card-body">
             <form action="" method="POST">
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="btn btn-primary">Update</button>
-              <a href="{% url 'patientReg' %}" class="btn btn-secondary">Cancel</a>
+              <a href="{% url 'medHis' %}" class="btn btn-secondary">Cancel</a>
             </form>
           </div>
         </div>
