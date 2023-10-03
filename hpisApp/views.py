@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect   
 from django.urls import reverse
 from .models import PatientReg
@@ -7,6 +7,12 @@ from .forms import PatientRegForm
 from .forms import MedHistoryForm
 
 
+
+def login(request):
+  return render(request, 'auth/login.html')
+
+def register(request):
+  return render(request, 'auth/register.html')
 
 def dashboard(request):
   return render(request, 'hpisApp/dashboard.html')
@@ -168,8 +174,6 @@ def addmedHis(request):
 
 
 
-
-
 def deletemedHis(request, id):
   if request.method == 'POST':
     medHis = MedHistory.objects.get(pk=id)
@@ -178,8 +182,6 @@ def deletemedHis(request, id):
 
 
 
-# def medHis(request):
-#   return render(request, 'hpisApp2/medHis.html')
 
 def doc(request):
   return render(request, 'hpisApp/doc.html')
