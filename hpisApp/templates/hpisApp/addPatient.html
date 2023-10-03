@@ -18,7 +18,7 @@
           <div class="card-body">
             <form action="{% url 'addPatient' %}" method="POST">
               {% csrf_token %} <!--for security reason when submitting forms-->
-              {{ form.as_p }}   <!--reffering to the forms. calling and displaying forms-->
+              {{ form.as_p }}   <!--reffering to the forms. calling and displaying forms p used to paragraph form-->
               <button type="submit" class="btn btn-primary">Add</button>
               <a href="{% url 'patientReg' %}" class="btn btn-secondary">Cancel</a>
             </form>

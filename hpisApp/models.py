@@ -16,9 +16,6 @@ class PatientReg(models.Model):
       return f'Patient {self.first_name} {self.last_name}'
 
 
-
-
-
 class MedHistory(models.Model):
    #use automatic adding of id, manual for now
    medhis_id = models.CharField(max_length=50)

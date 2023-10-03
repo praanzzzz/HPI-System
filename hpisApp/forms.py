@@ -1,8 +1,7 @@
 #used for forms if need nag input data from users, adding data
 
 from django import forms
-from .models import PatientReg
-from .models import MedHistory
+from .models import PatientReg, MedHistory
 
 
 class PatientRegForm(forms.ModelForm):
