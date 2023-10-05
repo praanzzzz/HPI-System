@@ -5,30 +5,71 @@ from .models import PatientReg
 from .models import MedHistory
 from .forms import PatientRegForm
 from .forms import MedHistoryForm
+#auth imports here
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 
-def login(request):
-  return render(request, 'auth/login.html')
+
 
 def register(request):
-  return render(request, 'auth/register.html')
+    #fetch data from registration form
+    if request.method == 'POST':
+        fname = request.POST.get('fname')
+        lname = request.POST.get('sname')
+        name = request.POST.get('uname')
+        email = request.POST.get('email')
+        password = request.POST.get('pass')
+      #save to database
+        new_user = User.objects.create_user(name, email, password)
+        new_user.first_name = fname
+        new_user.last_name = lname
+        new_user.save()
+        return redirect('Login')
+    return render(request, 'auth/register.html', {})
 
+# capital L since naay function nga login which cannot be used to naming
+def Login(request):
+    if request.method == 'POST':
+        #fetch data from login form
+        name = request.POST.get('uname')
+        password = request.POST.get('pass')
+    #authenticate
+        user = authenticate(request, username=name, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            return HttpResponse('Error, user does not exist')
+       
+    return render(request, 'auth/Login.html', {})
+
+
+@login_required
+def logoutuser(request):
+    logout(request)
+    return redirect('Login')
+
+@login_required
 def dashboard(request):
   return render(request, 'hpisApp/dashboard.html')
 
+@login_required
 def patientReg(request):
   return render(request, 'hpisApp/patientReg.html',
     {'patientReg': PatientReg.objects.all()}  #referring to models (PatientReg) , patientReg is the new variable ani
   )
 
-
+@login_required
 #get me the specific patient Registration that whose primary key is equal to the database passed to the argument
 def view_patientReg(request, id):
   patientReg = PatientReg.objects.get(pk=id)
   return HttpResponseRedirect (reverse('patientReg'))      #no need to hardcode index.html....use reverse para ma tawag tong other view nga index
 
-
+@login_required
 def editPatient(request, id):
   if request.method == 'POST':
     patientReg= PatientReg.objects.get(pk=id)
@@ -46,7 +87,7 @@ def editPatient(request, id):
     'form': form
   })
 
-
+@login_required
 def addPatient(request):
   if request.method == 'POST':
     form = PatientRegForm(request.POST)
@@ -84,7 +125,7 @@ def addPatient(request):
 
 
 
-
+@login_required
 def deletePatient(request, id):
   if request.method == 'POST':
     patientReg = PatientReg.objects.get(pk=id)
@@ -102,7 +143,7 @@ def deletePatient(request, id):
 
 
 
-
+@login_required
 # MEDICAL HISTORY
 def medHis(request):
   return render(request, 'hpisApp2/medHis.html',
@@ -110,12 +151,12 @@ def medHis(request):
   )
 
 
-
+@login_required
 def view_medHis(request, id):
   medHis = MedHistory.objects.get(pk=id)
   return HttpResponseRedirect (reverse('medHis'))      #no need to hardcode index.html....use reverse para ma tawag tong other view nga index
 
-
+@login_required
 def editmedHis(request, id):
   if request.method == 'POST':
     medHis= MedHistory.objects.get(pk=id)
@@ -133,7 +174,7 @@ def editmedHis(request, id):
     'form': form
   })
 
-
+@login_required
 def addmedHis(request):
   if request.method == 'POST':
     form = MedHistoryForm(request.POST)
@@ -173,7 +214,7 @@ def addmedHis(request):
   })
 
 
-
+@login_required
 def deletemedHis(request, id):
   if request.method == 'POST':
     medHis = MedHistory.objects.get(pk=id)
@@ -182,6 +223,6 @@ def deletemedHis(request, id):
 
 
 
-
+@login_required
 def doc(request):
   return render(request, 'hpisApp/doc.html')
