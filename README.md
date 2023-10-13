@@ -1,5 +1,6 @@
 # HPI-System
-Hospital Patient Information System
+
+This is a webapp Hospital Patient Information System built using python and Django. It incorporates CRUD, basic authentication, and SQLITE for the database.
 
 
 
